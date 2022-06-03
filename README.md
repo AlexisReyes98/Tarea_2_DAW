@@ -12,7 +12,7 @@ cuántos cero, además de indicar cuál fue el valor más grande leído, y cuál
 después de dar click en el botón debe mostrar la siguiente suma parcial de todas las potencias 
 x^k, empezando con k = 0 y hasta llegar a k = n, es decir:
 
-![image](https://user-images.githubusercontent.com/72325257/171803953-30bbe721-9f6f-4978-a4d0-074201216a8f.png)
+![image](https://user-images.githubusercontent.com/72325257/171804315-75430fad-bc18-4892-9175-b27e84ae37e6.png)
 
 3.- Elabora una interfaz web para que lea un número entero y después de dar click en el botón
 muestre como resultado una pirámide de asteriscos.
@@ -45,7 +45,7 @@ categoría y de forma global. Adecua la interfaz web para resolver este problema
 indica el número de términos, y después de dar click en el botón debe mostrar la siguiente
 función exponencial:
 
-![image](https://user-images.githubusercontent.com/72325257/171803809-d899bbe8-9103-412e-bf5e-189b254ed1f9.png)
+![image](https://user-images.githubusercontent.com/72325257/171804411-6557d6dc-1fe5-4fe2-9f1e-1d3ebc6ca43e.png)
 
 11.- Realizar la clase punto que tenga como atributos los ejes coordenados en X y Y. Añadir métodos 
 to_string_cartesianas y to_string_polares que devuelvan las coordenadas en cartesianas y polares 
