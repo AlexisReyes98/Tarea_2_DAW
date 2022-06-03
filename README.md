@@ -11,6 +11,7 @@ cuántos cero, además de indicar cuál fue el valor más grande leído, y cuál
 2.- Elaborar una interfaz web para que lea el valor de x (número real) y de n (entero), y 
 después de dar click en el botón debe mostrar la siguiente suma parcial de todas las potencias 
 x^k, empezando con k = 0 y hasta llegar a k = n, es decir:
+
 ![image](https://user-images.githubusercontent.com/72325257/171803953-30bbe721-9f6f-4978-a4d0-074201216a8f.png)
 
 3.- Elabora una interfaz web para que lea un número entero y después de dar click en el botón
@@ -43,6 +44,7 @@ categoría y de forma global. Adecua la interfaz web para resolver este problema
 10.- Elaborar una interfaz web para que lea el valor de x (número real) y de n (entero) que 
 indica el número de términos, y después de dar click en el botón debe mostrar la siguiente
 función exponencial:
+
 ![image](https://user-images.githubusercontent.com/72325257/171803809-d899bbe8-9103-412e-bf5e-189b254ed1f9.png)
 
 11.- Realizar la clase punto que tenga como atributos los ejes coordenados en X y Y. Añadir métodos 
