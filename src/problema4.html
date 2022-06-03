@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Problema 4</title>
+    <script >
+        //Funcion para validar la entrada del teclado
+        function entrada(e) {   //e -> evento del teclado
+            key = e.keyCode || e.wich;  //se almacena la entrada del teclado
+            teclado = String.fromCharCode(key); //lo almacene en una variable aparte
+            valido = "0123456789";    //caracteres válidos
+            if (valido.indexOf(teclado) == -1) {   //se valida la entrada del teclado (si no encuentra un caracter aceptado sera igual a -1)
+                return false;   //De no ser un caracter válido no lo dejara escribir
+            }
+        }
+        //Problema
+        var a = new Array(3),
+            b = new Array(3),
+            c = new Array(3);
+        function producto() {
+            for (var i = 0; i < 3; i++) {
+                //Estos arreglos simularan las matrices de entrada y salida
+                a[i] = [0,0,0];
+                b[i] = [0,0,0];
+                c[i] = [0,0,0];
+                //Convierto todos los valores string a float
+                for (var j = 0; j < 3; j++) {
+                    a[i][j] = parseFloat(document.matrizA[3*i+j].value);
+                    b[i][j] = parseFloat(document.matrizB[3*i+j].value);
+                }
+            }
+            //Se hace la multiplicación o producto de las matrices de entrada
+            for (var i = 0; i < 3; i++) {
+                for (var j = 0; j < 3; j++) {
+                    for (var k = 0; k < 3; k++) {
+                        c[i][j] = c[i][j] + a[i][k] * b[k][j];
+                    }
+                    document.matrizC1[3*i+j].value = c[i][j];
+                }
+            }
+        }
+        function suma() {
+            for (var i = 0; i < 3; i++) {
+                a[i] = [0,0,0];
+                b[i] = [0,0,0];
+                c[i] = [0,0,0];
+            
+                for (var j = 0; j < 3; j++) {
+                    a[i][j] = parseFloat(document.matrizA[3*i+j].value);
+                    b[i][j] = parseFloat(document.matrizB[3*i+j].value);
+                }
+            }
+            //Se hace la suma de las matrices de entrada
+            //Ya que la suma es "directa" no se necesita otro ciclo for
+            for (var i = 0; i < 3; i++) {
+                for (var j = 0; j < 3; j++) {
+                    c[i][j] = c[i][j] + a[i][j] + b[i][j];
+                    document.matrizC2[3*i+j].value = c[i][j];
+                }
+            }
+        }
+    </script>
+</head>   
+<body bgcolor="powderblue">
+    <h1>Solución al problema 4</h1>
+    <p>
+        Se leen los valores de dos matrices de 3x3 y se tienen dos botones, uno suma las matrices y otro las multiplica.
+        Posteriormente se muestra la matriz resultado de ambas operaciones.
+    </p>
+    <!--Cree distintos formularios para poder mostrar las matrices-->
+    <form name="matrizA">
+        <p>Matriz A =</p>
+        <!--El atributo onkeypress inicia alguna acción predefinida en un script asociado a él,
+        cuando el usuario presiona una tecla en el elemento.
+        El atributo onpaste funciona cuando se pega algún contenido en un elemento, en false no permite el CTRL-V-->
+        <input type="text" size="3" onkeypress="return entrada(event)" onpaste="return false">
+        <input type="text" size="3" onkeypress="return entrada(event)" onpaste="return false">
+        <input type="text" size="3" onkeypress="return entrada(event)" onpaste="return false">
+        <br>
+        <input type="text" size="3" onkeypress="return entrada(event)" onpaste="return false">
+        <input type="text" size="3" onkeypress="return entrada(event)" onpaste="return false">
+        <input type="text" size="3" onkeypress="return entrada(event)" onpaste="return false">
+        <br>
+        <input type="text" size="3" onkeypress="return entrada(event)" onpaste="return false">
+        <input type="text" size="3" onkeypress="return entrada(event)" onpaste="return false">
+        <input type="text" size="3" onkeypress="return entrada(event)" onpaste="return false">
+   </form>
+   
+   <form name="matrizB">
+        <p>Matriz B =</p>
+        <input type="text" size="3" onkeypress="return entrada(event)" onpaste="return false">
+        <input type="text" size="3" onkeypress="return entrada(event)" onpaste="return false">
+        <input type="text" size="3" onkeypress="return entrada(event)" onpaste="return false">
+        <br>
+        <input type="text" size="3" onkeypress="return entrada(event)" onpaste="return false">
+        <input type="text" size="3" onkeypress="return entrada(event)" onpaste="return false">
+        <input type="text" size="3" onkeypress="return entrada(event)" onpaste="return false">
+        <br>
+        <input type="text" size="3" onkeypress="return entrada(event)" onpaste="return false">
+        <input type="text" size="3" onkeypress="return entrada(event)" onpaste="return false">
+        <input type="text" size="3" onkeypress="return entrada(event)" onpaste="return false">
+        <br>
+        <br>
+        <!--Invvestigue otra manera y para ya no hacer otro script después del formulario en donde se utiliza el evento del boton,
+        es usar el evento onclick y este llama a la función previa declarada en el script del head-->
+        <input type="button" value="Multiplicación" onclick="producto()">
+        <input type="button" value="Suma" onclick="suma()">
+   </form>
+
+    <!--Se prohibe la escritura en estas entradas de texto-->
+   <form name="matrizC1">
+        <p>Matriz resultado C1 = AxB</p>
+        <input type="text" size="3" onkeypress="return entrada(event)" onpaste="return false" readonly>
+        <input type="text" size="3" onkeypress="return entrada(event)" onpaste="return false" readonly>
+        <input type="text" size="3" onkeypress="return entrada(event)" onpaste="return false" readonly>
+        <br>
+        <input type="text" size="3" onkeypress="return entrada(event)" onpaste="return false" readonly>
+        <input type="text" size="3" onkeypress="return entrada(event)" onpaste="return false" readonly>
+        <input type="text" size="3" onkeypress="return entrada(event)" onpaste="return false" readonly>
+        <br>
+        <input type="text" size="3" onkeypress="return entrada(event)" onpaste="return false" readonly>
+        <input type="text" size="3" onkeypress="return entrada(event)" onpaste="return false" readonly>
+        <input type="text" size="3" onkeypress="return entrada(event)" onpaste="return false" readonly>
+    </form>
+
+    <form name="matrizC2">
+        <p>Matriz resultado C2 = A+B</p>
+        <input type="text" size="3" onkeypress="return entrada(event)" onpaste="return false" readonly>
+        <input type="text" size="3" onkeypress="return entrada(event)" onpaste="return false" readonly>
+        <input type="text" size="3" onkeypress="return entrada(event)" onpaste="return false" readonly>
+        <br>
+        <input type="text" size="3" onkeypress="return entrada(event)" onpaste="return false" readonly>
+        <input type="text" size="3" onkeypress="return entrada(event)" onpaste="return false" readonly>
+        <input type="text" size="3" onkeypress="return entrada(event)" onpaste="return false" readonly>
+        <br>
+        <input type="text" size="3" onkeypress="return entrada(event)" onpaste="return false" readonly>
+        <input type="text" size="3" onkeypress="return entrada(event)" onpaste="return false" readonly>
+        <input type="text" size="3" onkeypress="return entrada(event)" onpaste="return false" readonly>
+    </form>
+    </body>
+</html>

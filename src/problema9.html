@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Problema 9</title>
+    <script>
+        //Funcion para validar la entrada del teclado
+        function entrada(e) {   //e -> evento del teclado
+            key = e.keyCode || e.wich;  //se almacena la entrada del teclado
+            teclado = String.fromCharCode(key); //lo almacene en una variable aparte
+            valido = "0123456789";    //caracteres válidos
+            if (valido.indexOf(teclado) == -1) {   //se valida la entrada del teclado (si no encuentra un caracter aceptado sera igual a -1)
+                return false;   //De no ser un caracter válido no lo dejara escribir
+            }
+        }
+        function calcular() {
+            var n = document.getElementById("ventas").value;
+            n = parseFloat(n);
+            var a=0, b=0, c=0;  //Número de ventas de cada tipo
+            var t1=0, t2=0, t3=0; //Total de ventas de cada tipo
+            var tt=0; //Total de todas las ventas
+            var cont=1;   //Contador de ventas
+            while (cont <= n) {
+                var v = prompt("Monto de la venta número: "+cont);
+                v = parseFloat(v);
+                if (v > 1000) {
+                    a++;
+                    t1 = t1 + v;
+                } else if (v > 500) {
+                    b++;
+                    t2 = t2 + v;
+                } else {
+                    c++;
+                    t3 = t3 + v;
+                }
+                tt = tt + v;
+                cont++;
+            }
+            document.getElementById("ven1").value = a;
+            document.getElementById("ven2").value = b;
+            document.getElementById("ven3").value = c;
+            document.getElementById("tot1").value = t1;
+            document.getElementById("tot2").value = t2;
+            document.getElementById("tot3").value = t3;
+            document.getElementById("total").value = tt;
+        }
+    </script>
+</head>
+<body bgcolor="powderblue">
+    <h1>Solución al problema 9</h1>
+    <p>
+        Un empleado de la tienda “Tiki Taka” realiza N ventas durante el día, se requiere saber cuántas 
+        de ellas fueron mayores a $1000, cuántas fueron mayores a $500 pero menores o iguales a $1000, y 
+        cuántas fueron menores o iguales a $500. Además, se requiere saber el monto de lo vendido en cada 
+        categoría y de forma global.
+    </p>
+    <form action="">    <!--Para darle un toque visual al formulario use una tabla-->
+        <br>
+        <table cellspacing="5" cellpadding="5" bordercolor="black">
+            <tr>
+                <td>
+                    <label for="x"><b>Número de ventas:</b></label>
+                </td>
+                <td>
+                    <input type="text" name="ventas" id="ventas" placeholder="Número de ventas"
+                        onkeypress="return entrada(event)" onpaste="return false">
+                    <!--El atributo onkeypress inicia alguna acción predefinida en un script asociado a él,
+                    cuando el usuario presiona una tecla en el elemento.
+                    El atributo onpaste funciona cuando se pega algún contenido en un elemento, en false no permite el CTRL-V-->
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" align="center">
+                    <input type="button" value="Calcular" onclick="calcular()">
+                </td>
+            </tr>
+            <tr>
+                <td><b>Número de ventas mayores a $1000:</b></td>
+                <td>
+                    <output name="ven1" id="ven1" for="ventas"></output>
+                </td>
+            </tr>
+            <tr>
+                <td><b>Número de ventas mayores a $500 pero menores o iguales a $1000:</b></td>
+                <td>
+                    <output name="ven2" id="ven2" for="ventas"></output>
+                </td>
+            </tr>
+            <tr>
+                <td><b>Número de ventas menores o iguales a $500:</b></td>
+                <td>
+                    <output name="ven3" id="ven3" for="ventas"></output>
+                </td>
+            </tr>
+            <tr>
+                <td><b>Total de ventas mayores a $1000:</b></td>
+                <td>
+                    <output name="tot1" id="tot1" for="ventas"></output>
+                </td>
+            </tr>
+            <tr>
+                <td><b>Total de ventas mayores a $500 pero menores o iguales a $1000:</b></td>
+                <td>
+                    <output name="tot2" id="tot2" for="ventas"></output>
+                </td>
+            </tr>
+            <tr>
+                <td><b>Total de ventas menores o iguales a $500:</b></td>
+                <td>
+                    <output name="tot3" id="tot3" for="ventas"></output>
+                </td>
+            </tr>
+            <tr>
+                <td><b>Total de todas las ventas:</b></td>
+                <td>
+                    <output name="total" id="total" for="ventas"></output>
+                </td>
+            </tr>
+        </table>
+    </form>
+</body>
+</html>

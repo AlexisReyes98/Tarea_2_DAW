@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Problema 8</title>
+    <script>
+        //Funcion para validar la entrada del teclado
+        function entrada(e) {   //e -> evento del teclado
+            key = e.keyCode || e.wich;  //se almacena la entrada del teclado
+            teclado = String.fromCharCode(key); //lo almacene en una variable aparte
+            valido = "0123456789.";    //caracteres válidos
+            if (valido.indexOf(teclado) == -1) {   //se valida la entrada del teclado (si no encuentra un caracter aceptado sera igual a -1)
+                return false;   //De no ser un caracter válido no lo dejara escribir
+            }
+        }
+        function entrada2(e) {   //e -> evento del teclado
+            key = e.keyCode || e.wich;  //se almacena la entrada del teclado
+            teclado = String.fromCharCode(key); //lo almacene en una variable aparte
+            valido = "LMMJVSD";    //caracteres válidos
+            if (valido.indexOf(teclado) == -1) {   //se valida la entrada del teclado (si no encuentra un caracter aceptado sera igual a -1)
+                return false;   //De no ser un caracter válido no lo dejara escribir
+            }
+        }
+        function entrada3(e) {   //e -> evento del teclado
+            key = e.keyCode || e.wich;  //se almacena la entrada del teclado
+            teclado = String.fromCharCode(key); //lo almacene en una variable aparte
+            valido = "MV";    //caracteres válidos
+            if (valido.indexOf(teclado) == -1) {   //se valida la entrada del teclado (si no encuentra un caracter aceptado sera igual a -1)
+                return false;   //De no ser un caracter válido no lo dejara escribir
+            }
+        }
+        function calcular() {
+            var ti = document.getElementById("tiempo").value;
+            ti = parseFloat(ti);
+            var di = document.getElementById("dia").value;
+            var tu = document.getElementById("turno"). value;
+            var pag=0, im=0, tot=0;   //pago, impuesto y total
+
+            //Se verifica el tiempo y se calcula el pago por llamada
+            //Nota: en el algoritmo decáa que si el tiempo es menor igual a 5 y 8 min pero en el diagrama solo está el
+            //símbolo de menor por lo que considere como criterio el texto y considere el menor igual
+            if (ti <= 5) {
+                pag = ti * 1;
+            } else if(ti <= 8) {
+                pag = (ti - 5) * 0.8 + 5;
+            } else if(ti <= 10) {
+                pag = (ti - 8) * 0.7 + 7.4;
+            } else {
+                pag = (ti - 10) * 0.5 + 8.8;
+            }
+            //Se verifica el día
+            if (di == "D") {
+                im = pag * 0.05;
+            } else {
+                //Se verifica el turno y se calcula el impuesto
+                if (tu == "M") {
+                    im = pag * 0.15;
+                } else {
+                    im = pag * 0.10;
+                }
+            }
+            tot = pag + im; //Se calcula el total a pagar por la llamada
+            //Se imprime el pago, el impuesto y el total
+            document.getElementById("pago").value = pag;
+            document.getElementById("impuesto").value = im;
+            document.getElementById("total").value = tot;
+        }
+    </script>
+</head>
+<body bgcolor="powderblue">
+    <h1>Solución al problema 8</h1>
+    <p>
+        Se tiene el siguiente resultado para una compañía telefónica. Se lee el tiempo de llamada (TI) en minutos, el tipo de día (DI) de los días de la semana, y el turno (TU) 
+        sea matutino o vespertino. Y después de un click de botón deberá se muestra el pago, el impuesto y el total.
+    </p>
+    <form action="">    <!--Para darle un toque visual al formulario use una tabla-->
+        <br>
+        <table cellspacing="5" cellpadding="5" bordercolor="black">
+            <tr>
+                <td>
+                    <label for="x"><b>Tiempo de llamada (en minutos):</b></label>
+                </td>
+                <td>
+                    <input type="text" name="tiempo" id="tiempo" placeholder="Tiempo de llamada"
+                        onkeypress="return entrada(event)" onpaste="return false">
+                    <!--El atributo onkeypress inicia alguna acción predefinida en un script asociado a él,
+                    cuando el usuario presiona una tecla en el elemento.
+                    El atributo onpaste funciona cuando se pega algún contenido en un elemento, en false no permite el CTRL-V-->
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label for="n"><b>Día de la semana (L, M, M, J, V, S, D):</b></label>
+                </td>
+                <td>
+                    <input type="text" name="dia" id="dia" placeholder="Día de la semana"
+                        onkeypress="return entrada2(event)" onpaste="return false" maxlength="1">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label for="n"><b>Turno (M, V):</b></label>
+                </td>
+                <td>
+                    <input type="text" name="turno" id="turno" placeholder="Turno"
+                        onkeypress="return entrada3(event)" onpaste="return false" maxlength="1">
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" align="center">
+                    <input type="button" value="Calcular" onclick="calcular()">
+                </td>
+            </tr>
+            <tr>
+                <td><b>Pago:</b></td>
+                <td>
+                    <output name="pago" id="pago" for="tiempo dia turno"></output>
+                </td>
+            </tr>
+            <tr>
+                <td><b>Impuesto:</b></td>
+                <td>
+                    <output name="impuesto" id="impuesto" for="tiempo dia turno"></output>
+                </td>
+            </tr>
+            <tr>
+                <td><b>Total:</b></td>
+                <td>
+                    <output name="total" id="total" for="tiempo dia turno"></output>
+                </td>
+            </tr>
+        </table>
+    </form>
+    <p>Para ingresar los días de la semana solo es introducir la primera letra en mayuscula del día, Ejemplo: L = Lunes</p>
+    <p>Así como para introducir el turno V= Vespertino y M = Matutino</p>
+    <p>Para que no existan fallos solo se permiten esas letras.</p>
+</body>
+</html>

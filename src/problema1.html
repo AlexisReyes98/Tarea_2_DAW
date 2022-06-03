@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Problema 1</title>
+    <script>
+        //Funcion para validar la entrada del teclado
+        function entrada(e) {   //e -> evento del teclado
+            key = e.keyCode || e.wich;  //se almacena la entrada del teclado
+            teclado = String.fromCharCode(key); //lo almacene en una variable aparte
+            valido = "0123456789-,.";    //caracteres válidos
+            if (valido.indexOf(teclado) == -1) {   //se valida la entrada del teclado (si no encuentra un caracter aceptado sera igual a -1)
+                return false;   //De no ser un caracter válido no lo dejara escribir
+            }
+        }
+    </script>
+</head>
+<body bgcolor="powderblue">
+    <h1>Solución al problema 1</h1>
+    <p>
+        Se lee una cantidad n de números reales, y después de dar 
+        click en el botón, se muestra cuántos de estos números fueron positivos, cuántos negativos y 
+        cuántos cero, además de indicar cuál fue el valor más grande leído, y cuál el más pequeño.
+    </p>
+    <form action="">    <!--Para darle un toque visual al formulario use una tabla-->
+        <table align="center" cellspacing="5" cellpadding="5" bordercolor="black">
+            <tr>
+                <td colspan="2">
+                    <label for="numeros">Ingresa una cantidad de números reales:</label>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" align="center">
+                    <input type="text" name="numeros" id="numeros" placeholder="Ej. 15,0,-8,6,-7,0,19,2.5"
+                        onkeypress="return entrada(event)" onpaste="return false">
+                    <!--El atributo onkeypress inicia alguna acción predefinida en un script asociado a él,
+                    cuando el usuario presiona una tecla en el elemento.
+                    El atributo onpaste funciona cuando se pega algún contenido en un elemento, en false no permite el CTRL-V-->
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" align="center">
+                    <input type="button" id="btn" value="Calcular">
+                </td>
+            </tr>
+            <tr>
+                <td><b>No. de Positivos:</b></td>
+                <td>
+                    <output name="positivos" id="positivos" for="numeros"></output>
+                </td>
+            </tr>
+            <tr>
+                <td><b>No. de Negativos:</b></td>
+                <td>
+                    <output name="negativos" id="negativos" for="numeros"></output>
+                </td>
+            </tr>
+            <tr>
+                <td><b>No. de Ceros:</b></td>
+                <td>
+                    <output name="ceros" id="ceros" for="numeros"></output>
+                </td>
+            </tr>
+            <tr>
+                <td><b>Valor más grande:</b></td>
+                <td>
+                    <output name="nmax" id="nmax" for="numeros"></output>
+                </td>
+            </tr>
+            <tr>
+                <td><b>Valor más pequeño:</b></td>
+                <td>
+                    <output name="nmin" id="nmin" for="numeros"></output>
+                </td>
+            </tr>
+        </table>
+        <br>
+        <p>Nota: Caracteres que son aceptados para ingresar los números: 0 1 2 3 4 5 6 6 7 8 9 - . ,</p>
+        <p>Los números deben ser separados cada uno por una coma ","</p>
+    </form>
+    <script>
+        var boton = document.getElementById('btn');
+        function calcular() {
+            var numeros = document.getElementById('numeros').value, j=0, miArray = new Array();
+            // Extraigo todos los valores del campo de texto a un array limpio
+            for (var i = 0; i < numeros.length; i++) {
+                if (numeros[i] != ",") {    //Separador entre numeros
+                    if (miArray[j] === undefined) {     //Si la posicion donde se guardara el numero esta vacia se remplaza
+                        miArray[j] = numeros[i];
+                    } else {    //De lo contrario si no esta vacia se concatena el siguiente elemento de la variable numeros, para obtener el
+                        miArray[j] += numeros[i];   //numero completo
+                    }
+                } else {
+                    j++;    //Se incrementa la posición del miArray solo si ya se introdujo el número completo
+                }
+            }
+            //Convierto todos los valores string a float, esto para también incluir a los numeros de punto flotante
+            for (var k = 0; k < miArray.length; k++) {
+                miArray[k] = parseFloat(miArray[k]);
+            }
+            //console.log(miArray);
+
+            //Resolucion del problema
+            var c1=0, c2=0, c3=0;
+            for (let q = 0; q < miArray.length; q++) {
+                if (miArray[q] == 0) {  //Se cuentan los ceros
+                    c1++;
+                } else if(miArray[q] > 0) {     //Se cuentan los positivos
+                    c2++;
+                } else if(miArray[q] < 0){      //Se cuentan los negativos
+                    c3++;
+                }
+            }
+            //Se encuantra el valor maximo y minimo del arreglo
+            var max = miArray[0], min = miArray[0]; //Paso como primer valor de max y min el primer elemento del array
+            for (var x = 1; x < miArray.length; x++) {
+                if (max < miArray[x]) {
+                    max = miArray[x];
+                }
+                if (min > miArray[x]) {
+                    min = miArray[x];
+                }
+            }
+            document.getElementById("ceros").innerHTML = c1;
+            document.getElementById("positivos").innerHTML = c2;
+            document.getElementById("negativos").innerHTML = c3;
+            document.getElementById("nmax").innerHTML = max;
+            document.getElementById("nmin").innerHTML = min;
+        }
+        boton.addEventListener('click', calcular);  //Con el evento click se llama a la funcion calcular
+    </script>
+</body>
+</html>

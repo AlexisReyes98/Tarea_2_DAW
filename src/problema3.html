@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Problema 3</title>
+    <script>
+        //Funcion para validar la entrada del teclado
+        function entrada(e) {   //e -> evento del teclado
+            key = e.keyCode || e.wich;  //se almacena la entrada del teclado
+            teclado = String.fromCharCode(key); //lo almacene en una variable aparte
+            valido = "0123456789";    //caracteres válidos
+            if (valido.indexOf(teclado) == -1) {   //se valida la entrada del teclado (si no encuentra un caracter aceptado sera igual a -1)
+                return false;   //De no ser un caracter válido no lo dejara escribir
+            }
+        }
+    </script>
+</head>
+<body bgcolor="powderblue">
+    <h1>Solución al problema 3</h1>
+    <p>
+        Se lee un número entero y después de dar click en el botón se 
+        muestra como resultado una pirámide de asteriscos.
+    </p>
+    <form action="">    <!--Para darle un toque visual al formulario use una tabla-->
+        <table align="center" cellspacing="5" cellpadding="5" bordercolor="black">
+            <tr>
+                <td>
+                    <label for="numPisos"><b>Número de pisos:</b></label>
+                </td>
+                <td>
+                    <input type="text" name="numPisos" id="numPisos" placeholder="Ej. 6"
+                        onkeypress="return entrada(event)" onpaste="return false">
+                    <!--El atributo onkeypress inicia alguna acción predefinida en un script asociado a él,
+                    cuando el usuario presiona una tecla en el elemento.
+                    El atributo onpaste funciona cuando se pega algún contenido en un elemento, en false no permite el CTRL-V-->
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" align="center">
+                    <input type="button" id="btn" value="Crear piramide">
+                </td>
+            </tr>
+        </table>
+        <output name="piramide" id="piramide" for="numPisos"></output> <!--Se muestra la piramide-->
+    </form>
+    <script>
+        var boton = document.getElementById("btn");
+        function piramideA() {
+            var numPisos = document.getElementById("numPisos").value;
+            //Resolucion del problema
+            numPisos = parseInt(numPisos, 10);
+            //console.log(numPisos);
+            //La piramide se crea en un array con espacios (en lugar de poner en una funcion distintos for se simplico de esta manera)
+            var piramide = (n) => Array.from({length:n}).map((e, i) => " ".repeat(n-i-1)+"*".repeat(i+i+1));
+            var pisos = "<pre>"+piramide(numPisos).join("\n");   //En una variable guardo los array de asteriscos con sus respectivos saltos de linea
+            document.getElementById("piramide").innerHTML = pisos;
+        }
+        boton.addEventListener("click", piramideA);
+    </script>
+</body>
+</html>

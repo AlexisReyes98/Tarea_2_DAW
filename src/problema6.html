@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Problema 6</title>
+    <script>
+        //Funcion para validar la entrada del teclado
+        function entrada(e) {   //e -> evento del teclado
+            key = e.keyCode || e.wich;  //se almacena la entrada del teclado
+            teclado = String.fromCharCode(key); //lo almacene en una variable aparte
+            valido = "0123456789-,.";    //caracteres válidos
+            if (valido.indexOf(teclado) == -1) {   //se valida la entrada del teclado (si no encuentra un caracter aceptado sera igual a -1)
+                return false;   //De no ser un caracter válido no lo dejara escribir
+            }
+        }
+    </script>
+</head>
+<body bgcolor="powderblue">
+    <h1>Solución al problema 6</h1>
+    <p>
+        Se leen n valores y después de un click, se muestran los valores 
+        ordenados de manera ascendente y también se muestran ordenados de forma descendente.
+    </p>
+    <form action="">    <!--Para darle un toque visual al formulario use una tabla-->
+        <table align="center" cellspacing="5" cellpadding="5" bordercolor="black">
+            <tr>
+                <td colspan="2">
+                    <label for="numeros">Ingresa una cantidad de números reales:</label>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" align="center">
+                    <input type="text" name="numeros" id="numeros" placeholder="Ej. 15,0,-8,6,-7,0,19,2.5"
+                        onkeypress="return entrada(event)" onpaste="return false">
+                    <!--El atributo onkeypress inicia alguna acción predefinida en un script asociado a él,
+                    cuando el usuario presiona una tecla en el elemento.
+                    El atributo onpaste funciona cuando se pega algún contenido en un elemento, en false no permite el CTRL-V-->
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input type="button" id="btn1" value="Ordenar ascendente">
+                </td>
+                <td>
+                    <input type="button" id="btn2" value="Ordenar descendente">
+                </td>
+            </tr>
+            <tr>
+                <td><b>Valores ordenados ascendentemente:</b></td>
+                <td>
+                    <output name="ascendente" id="ascendente" for="numeros"></output>
+                </td>
+            </tr>
+            <tr>
+                <td><b>Valores ordenados descendentemente:</b></td>
+                <td>
+                    <output name="descendente" id="descendente" for="numeros"></output>
+                </td>
+            </tr>
+        </table>
+        <br>
+        <p>Nota: Caracteres que son aceptados para ingresar los valores: 0 1 2 3 4 5 6 6 7 8 9 - . ,</p>
+        <p>Los valores deben ser separados cada uno por una coma ","</p>
+        <p>Se uso el método de ordenamiento Insertion Sort para ordenar los valores de ambas maneras</p>
+    </form>
+    <script>
+        var boton1 = document.getElementById("btn1"),
+            boton2 = document.getElementById("btn2");
+        //Esta función obtiene los valores del texto de entrada
+        var obtenerArray = function () {
+            var numeros = document.getElementById('numeros').value, j=0, miArray = new Array();
+            // Extraigo todos los valores del campo de texto a un array limpio
+            for (var i = 0; i < numeros.length; i++) {
+                if (numeros[i] != ",") {    //Separador entre numeros
+                    if (miArray[j] === undefined) {     //Si la posicion donde se guardara el numero esta vacia se remplaza
+                        miArray[j] = numeros[i];
+                    } else {    //De lo contrario si no esta vacia se concatena el siguiente elemento de la variable numeros, para obtener el
+                        miArray[j] += numeros[i];   //numero completo
+                    }
+                } else {
+                    j++;    //Se incrementa la posición del miArray solo si ya se introdujo el número completo
+                }
+            }
+            //Convierto todos los valores string a float, esto para también incluir a los numeros con punto decimal
+            for (var k = 0; k < miArray.length; k++) {
+                miArray[k] = parseFloat(miArray[k]);
+            }
+            //Hago una copia del arreglo original
+            var miArray2 = new Array();
+            for (var q = 0; q < miArray.length; q++) {
+                miArray2[q] = miArray[q];
+            }
+            return miArray2;    //Regreso la copia del array
+        }
+        function ordenAscendente() {
+            var miArrayA = obtenerArray();  //Llamo a la función que extrae el array del texto de entrada
+            //Por método de ordenamiento Insertion sort, ordeno de manera ascendente el array
+            //Ciclo externo
+            for (var i = 1; i < miArrayA.length; i++) {
+                var k =  miArrayA[i];
+                var j = i-1;
+                //Ciclo interno
+                while ((j >= 0) && miArrayA[j] > k) {
+                    miArrayA[j+1] =  miArrayA[j];
+                    j--;
+                }
+                miArrayA[j+1] = k;
+            }
+            document.getElementById("ascendente").innerHTML = miArrayA;
+        }
+        function ordenDescendente() {
+            var miArrayB = obtenerArray();
+            //Por el método de ordenamiento Insertion sort, ordeno de manera descendente el array
+            //Ciclo externo
+            for (var i = 1; i < miArrayB.length; i++) {
+                var k =  miArrayB[i];
+                var j = i-1;
+                //Ciclo interno
+                while ((j>=0) &&  miArrayB[j] < k){
+                    miArrayB[j+1] =  miArrayB[j];
+                    j--;
+                }
+                miArrayB[j+1] = k;
+            }
+            document.getElementById("descendente").innerHTML = miArrayB;
+        }
+        boton1.addEventListener('click', ordenAscendente);
+        boton2.addEventListener('click', ordenDescendente);
+    </script>
+</body>
+</html>

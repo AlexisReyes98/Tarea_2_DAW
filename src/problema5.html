@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Problema 5</title>
+    <script>
+        //Funcion para validar la entrada del teclado
+        function entrada(e) {   //e -> evento del teclado
+            key = e.keyCode || e.wich;  //se almacena la entrada del teclado
+            teclado = String.fromCharCode(key); //lo almacene en una variable aparte
+            valido = "0123456789-,";    //caracteres válidos
+            if (valido.indexOf(teclado) == -1) {   //se valida la entrada del teclado (si no encuentra un caracter aceptado sera igual a -1)
+                return false;   //De no ser un caracter válido no lo dejara escribir
+            }
+        }
+    </script>
+</head>
+<body bgcolor="powderblue">
+    <h1>Solución al problema 5</h1>
+    <p>Se leen n valores y después de un click, se muestra la media y la desviación estándar de los números insertados.</p>
+    <form action="">    <!--Para darle un toque visual al formulario use una tabla-->
+        <table align="center" cellspacing="5" cellpadding="5" bordercolor="black">
+            <tr>
+                <td colspan="2">
+                    <label for="numeros">Ingresa una cantidad de números enteros:</label>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" align="center">
+                    <input type="text" name="numeros" id="numeros" placeholder="Ej. 15,3,67,7,19,2"
+                        onkeypress="return entrada(event)" onpaste="return false">
+                    <!--El atributo onkeypress inicia alguna acción predefinida en un script asociado a él,
+                    cuando el usuario presiona una tecla en el elemento.
+                    El atributo onpaste funciona cuando se pega algún contenido en un elemento, en false no permite el CTRL-V-->
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input type="button" id="btn" value="Medir muestra">
+                </td>
+            </tr>
+            <tr>
+                <td><b>Media:</b></td>
+                <td>
+                    <output name="media" id="media" for="numeros"></output>
+                </td>
+            </tr>
+            <tr>
+                <td><b>Desviación estandar:</b></td>
+                <td>
+                    <output name="desviacion" id="desviacion" for="numeros"></output>
+                </td>
+            </tr>
+        </table>
+        <br>
+        <p>Nota: Los valores deben ser separados cada uno por una coma ","</p>
+    </form>
+    <script>
+        var boton = document.getElementById("btn");
+        //Esta función obtiene los valores del texto de entrada
+        var obtenerArray = function () {
+            var numeros = document.getElementById('numeros').value, j=0, miArray = new Array();
+            // Extraigo todos los valores del campo de texto a un array limpio
+            for (var i = 0; i < numeros.length; i++) {
+                if (numeros[i] != ",") {    //Separador entre numeros
+                    if (miArray[j] === undefined) {     //Si la posicion donde se guardara el numero esta vacia se remplaza
+                        miArray[j] = numeros[i];
+                    } else {    //De lo contrario si no esta vacia se concatena el siguiente elemento de la variable numeros, para obtener el
+                        miArray[j] += numeros[i];   //numero completo
+                    }
+                } else {
+                    j++;    //Se incrementa la posición del miArray solo si ya se introdujo el número completo
+                }
+            }
+            //Convierto todos los valores string a int de la base especificada.
+            for (var k = 0; k < miArray.length; k++) {
+                miArray[k] = parseFloat(miArray[k]);
+            }
+            //Hago una copia del arreglo original
+            var miArray2 = new Array();
+            for (var q = 0; q < miArray.length; q++) {
+                miArray2[q] = miArray[q];
+            }
+            return miArray2;    //Regreso la copia del array
+        }
+        var media = function media() {
+            var miArrayM = obtenerArray();  //Llamo a la función que extrae el array del texto de entrada
+            //Obtengo la media de los números
+            var med = 0;
+            if (miArrayM.length % 2 == 0) {
+                var pos1 = miArrayM.length/2;
+                var pos2 = pos1-1;
+                var elem1 = miArrayM[pos1];
+                var elem2 = miArrayM[pos2];
+                med = (elem1+elem2)/2;
+            } else {
+                var pos_central = (miArrayM.length-1)/2;
+                med = miArrayM[pos_central];
+            }
+            return med;
+        }
+        function desviacion() {
+            var miArrayM2 = obtenerArray();
+            var m = media();
+            //Obtengo la desviacón estandar
+            var suma = 0;
+            for (var i = 0; i < miArrayM2.length; i++) {
+                var v = Math.pow(miArrayM2[i]-m, 2);
+                suma = suma + v;
+            }
+            //En este punto la variable suma contiene la suma de las desviaciones
+            suma = suma/miArrayM2.length;
+            var d = Math.sqrt(suma);
+            document.getElementById("media").innerHTML = m;
+            document.getElementById("desviacion").innerHTML = d;
+        }
+        boton.addEventListener('click', desviacion);
+    </script>
+</body>
+</html>
